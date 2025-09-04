@@ -8,7 +8,6 @@ function App() {
 const a = 5
 const b = 4
 const c = 4
-const d = 8
 
 const e=(a,b,r)=>{
   let t=  a*2;
