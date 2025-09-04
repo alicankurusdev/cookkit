@@ -4,7 +4,7 @@ import './App.css'
 
 function App() {
 
-
+let ahmet = 'true';
 const a = 5
 const c = 4
 let g =0
