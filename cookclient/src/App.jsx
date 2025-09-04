@@ -4,6 +4,7 @@ import './App.css'
 
 function App() {
   
+let ahmet = 'true';
 let mehmet = "asdasdas"
 
 const a = 5
