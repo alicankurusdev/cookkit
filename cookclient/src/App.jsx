@@ -11,6 +11,7 @@ let g =0
 const e=(a,b,r)=>{
   let t=  a*2;
     let y=b+3;
+    let zr  = 7;
    let z= c-1
  return t+y+z
 }
