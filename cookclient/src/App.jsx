@@ -6,7 +6,6 @@ function App() {
 
 
 const a = 5
-const b = 4
 const c = 4
 
 const e=(a,b,r)=>{
@@ -16,7 +15,6 @@ const e=(a,b,r)=>{
  return t+y+z
 }
 
-const h = e(a,d)
 
   return (
     <div>
