@@ -3,7 +3,8 @@ import { useState } from 'react'
 import './App.css'
 
 function App() {
-
+  
+let mehmet = "asdasdas"
 
 const a = 5
 const c = 4
