@@ -22,7 +22,7 @@ const e=(a,b,r)=>{
     <div>
     <h2>Cohort 19</h2>
     <h3>deneme branch</h3>
-    <h5>deneme</h5>
+    <h4>Deneme H4</h4>
     </div>
       
   )
