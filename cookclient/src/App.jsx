@@ -7,7 +7,7 @@ function App() {
 
 const a = 5
 const c = 4
-
+let g =0
 const e=(a,b,r)=>{
   let t=  a*2;
     let y=b+3;
