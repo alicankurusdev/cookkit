@@ -1,0 +1,37 @@
+# @name auth
+post http://localhost:8000/
+Content-Type: application/json
+
+{
+    
+}
+
+### 
+
+# @name tokens
+get http://localhost:8000/tokens/
+
+
+###
+
+# @name departments
+get http://localhost:8000/departments/68b89fe60053947efed38319/personnels
+Content-Type: application/json
+Authorization: Token 8b56992b7f6319a67836d4e31f89439c22a107db43f24ff5d15e247bfe9f3554
+
+
+###
+
+# @name personnels
+# notActive 26042ad8881cf220aa7e46b1f97a7597ab958ab89687d7731db2629075d832f9
+# admin ba278e2725f7557dac8a61f325f91a45e3cbd911aa73c2c9183f350a7d12d23a
+# lead ab7b64ad59b3eec81048e904a75628be1fb566a7d54eae362c51089938709053
+# normal 80b6a77aadf790d383a0078f08462e43c923b07a2687e516f2f8364ba764c596
+# deveops lead 8b56992b7f6319a67836d4e31f89439c22a107db43f24ff5d15e247bfe9f3554
+put http://localhost:8000/personnels/68b89fe70053947efed38338
+Content-Type: application/json
+Authorization: Token ba278e2725f7557dac8a61f325f91a45e3cbd911aa73c2c9183f350a7d12d23a
+
+{
+    "isLead":true
+}
