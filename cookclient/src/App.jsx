@@ -22,11 +22,9 @@ const e=(a,b,r)=>{
 
   return (
     <div>
-    <h2>Cohort 19</h2>
-    <h3>deneme branch</h3>
-    <h4>Deneme H4</h4>
-    <h1>öasnacnaipuscbn</h1>
-    <h5>denemedesktop</h5>
+   Front todo list
+   dosya yapisi
+   3rd parties
     </div>
       
   )

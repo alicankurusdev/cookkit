@@ -1,6 +1,6 @@
 "use strict"
 /* -------------------------------------------------------
-    EXPRESS - Personnel API
+    EXPRESS - RECIPE API
 ------------------------------------------------------- */
 // app.use(errorHandler):
 
