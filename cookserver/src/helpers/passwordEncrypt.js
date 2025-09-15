@@ -1,10 +1,10 @@
 "use strict"
 /* -------------------------------------------------------
-    EXPRESS - RECIPE API
+    EXPRESS - RECIPE API - PASS-ENCRYPTOR
 ------------------------------------------------------- */
-// passwordEncrypt():
 
 const crypto = require('node:crypto'),
+
     keyCode = process.env.SECRET_KEY,
     loopCount = 10_000,
     charCount = 32,

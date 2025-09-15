@@ -8,11 +8,11 @@ module.exports = async (req, res, next) => {
   req.user = null;
 
   // Session check
-  const { _id, email } = req?.session || {};
-  if (_id && email) {
-    const user = await User.findOne({ _id, email });
-    if (user) req.user = user;
-  }
+  // const { _id, email } = req?.session || {};
+  // if (_id && email) {
+  //   const user = await User.findOne({ _id, email });
+  //   if (user) req.user = user;
+  // }
 
   // Token check (sadece req.user boşsa çalışsın)
   if (!req.user) {
