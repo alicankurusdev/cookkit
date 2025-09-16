@@ -33,7 +33,7 @@ app.use(require('cookie-session')({
 app.use(require('./src/middlewares/queryHandler'));
 
 // Authentication:
-app.use(require('./src/middlewares/auth'));
+// app.use(require('./src/middlewares/auth'));
 
 // Routes
 
@@ -42,31 +42,40 @@ app.all('/', (req, res) => {
 
     res.status(200).send({
         error: false,
-        message: 'Welcome to Personnel API Service',
+        message: 'Welcome to COOKKIT API Service',
         session: req.session
     });
 });
+
+//! ROUTES
+
+app.use('/users', require('./src/routes/users'));
+app.use('/tokens', require('./src/routes/tokens.js'));
+app.use('/stars', require('./src/routes/stars.js'));
+app.use('/comments', require('./src/routes/comments.js'));
+app.use('/mealCategories', require('./src/routes/mealCategories.js'));
+app.use('/recipes', require('./src/routes/recipes.js'));
 
 /* ------------------------------------------------------- */
 // ErrorHandler:
 app.use(require('./src/middlewares/errorHandler'))
 
-// RUN SERVER:
-app.listen(PORT, () => console.log('Running: http://127.0.0.1:' + PORT))
+// RUN SERVER:a
+app.listen( PORT, () => console.log('API IS RUNNING ON:' + PORT))
 
 /* ------------------------------------------------------- */
-// Syncronization (must be in commentLine):
 // require('./src/helpers/sync')()
 
 
 // API TODOS
 /* -------------------------------------------------------------------------- */
 
+//? -------------------------------- ERD -------------------------------- */
 //? -------------------------------- dosya yapisi -------------------------------- */
-//? -------------------------------- MIDDLEWARE -------------------------------- */
-
-//? -------------------------------- helpers -------------------------------- */
 //? -------------------------------- models -------------------------------- */
 //? -------------------------------- controller -------------------------------- */
 //? -------------------------------- route -------------------------------- */
-//? -------------------------------- ERD -------------------------------- */
+//? -------------------------------- MIDDLEWARE -------------------------------- */
+//? -------------------------------- helpers -------------------------------- */
+//? -------------------------------- swagger -------------------------------- */
+//? -------------------------------- develop controllers -------------------------------- */

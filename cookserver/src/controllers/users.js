@@ -1,15 +1,14 @@
-"use strict"
+"use strict";
 /* -------------------------------------------------------
-Cookkit-recipeAPP-users-controller
+Cookkit-USERS-Controller
 ------------------------------------------------------- */
 
-const User = require('../models/users');
-const CustomError = require('../helpers/customError');
+const User = require("../models/users");
+const CustomError = require("../helpers/customError");
 
 module.exports = {
-
-    list: async (req, res) => {
-        /* 
+  list: async (req, res) => {
+    /* 
             #swagger.tags = ['Users']
             #swagger.summary = 'List Users'
             #swagger.desription = `
@@ -23,71 +22,78 @@ module.exports = {
             `
         */
 
-        const result = await res.getModelList(User);
+    const result = await res.getModelList(User);
+    if (!result) throw new CustomError("No Users Found", 404);
 
-        res.status(200).send({
-            error: false,
-            details: await res.getModelListDetails(User),
-            result
-        });
-    },
+    res.status(200).send({
+      error: false,
+      details: await res.getModelListDetails(User),
+      result,
+    });
+  },
 
-    create: async (req, res) => {
-        /* 
+  create: async (req, res) => {
+    /* 
             #swagger.tags = ['Users']
             #swagger.summary = 'Create User'
         */
 
-        //? Password Validation 
+    //? Password Validation
 
-        const result = await User.create(req.body);
+    const result = await User.create(req.body);
+    if (!result) throw new CustomError("Unable to create record", 404);
 
-        res.status(201).send({
-            error: false,
-            result
-        })
-    },
+    res.status(201).send({
+      error: false,
+      result,
+    });
+  },
 
-    read: async (req, res) => {
-        /* 
+  read: async (req, res) => {
+    /* 
             #swagger.tags = ['Users']
             #swagger.summary = 'Get Single User'
         */
 
-        const result = await User.findById(req.params.id);
+    const result = await User.findById(req.params.id);
+    if (!result) throw new CustomError("No users found.", 404);
 
-        res.status(200).send({
-            error: false,
-            result
-        })
-    },
+    res.status(200).send({
+      error: false,
+      result,
+    });
+  },
 
-    update: async (req, res) => {
-        /* 
+  update: async (req, res) => {
+    /* 
             #swagger.tags = ['Users']
             #swagger.summary = 'Update User'
         */
 
-        const result = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+    const result = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
 
-        if (!result) throw new CustomError('Data is not found.', 404);
+    if (!result) throw new CustomError("Data is not found.", 404);
 
-        res.status(200).send({
-            error: false,
-            result
-        })
-    },
+    res.status(200).send({
+      error: false,
+      result,
+    });
+  },
 
-    dlt: async (req, res) => {
-        /* 
+  dlt: async (req, res) => {
+    /* 
             #swagger.tags = ['Users']
             #swagger.summary = 'Delete User'
         */
 
-        const result = await User.deleteOne({ _id: req.params.id });
+    const result = await User.deleteOne({ _id: req.params.id });
 
-        if (!result.deletedCount) throw new CustomError('Data is not found or already deleted.', 404);
+    if (!result.deletedCount)
+      throw new CustomError("Data is not found or already deleted.", 404);
 
-        res.sendStatus(204);
-    },
-}
+    res.sendStatus(204);
+  },
+};

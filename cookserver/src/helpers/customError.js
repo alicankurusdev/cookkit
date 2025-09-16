@@ -2,14 +2,14 @@
 /* -------------------------------------------------------
     EXPRESS - RECIPE API
 ------------------------------------------------------- */
-// app.use(errorHandler):
+class CustomError extends Error {
 
-module.exports = (err, req, res, next) => {
-    // console.log(err.statusCode);
-    return res.status(err?.statusCode || 500).send({
-        error: true,
-        message: err.message,
-        cause: err.cause,
-        body: req.body
-    });
+    name = 'CustomError'
+
+    constructor(message, statusCode = 500) {
+        super(message)
+        this.statusCode = statusCode
+    }
 }
+
+module.exports = CustomError;

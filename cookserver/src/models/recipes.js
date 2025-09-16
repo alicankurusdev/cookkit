@@ -33,13 +33,12 @@ const recipeSchema = new Schema(
       type: [String],
       required: true,
     },
-    imageUrl:{
+    imageUrl:{              //!list olacak burasi multer sonrasi update cak
         type:String
     },
     comments: [{
       type: Schema.Types.ObjectId,
       ref: "Comment",
-      required: true, 
     }],
     mealCategories: [{
       type: Schema.Types.ObjectId,
@@ -47,9 +46,7 @@ const recipeSchema = new Schema(
       required: true, 
     }],
     stars: [{
-      type: Schema.Types.ObjectId,
-      ref: "Star",
-      required: true, 
+      type: Schema.Types.ObjectId,         
     }],
   },
   {

@@ -14,10 +14,15 @@ const commentSchema = new Schema(
       ref: "User",
       required: true,
     },
+    recipeId: {
+      type: Schema.Types.ObjectId,
+      ref: "Recipe",
+      required: true,
+    },
     content: {
-        type: String,
-        trim: true,
-        required: true,
+      type: String,
+      trim: true,
+      required: true,
     },
   },
   {

@@ -13,7 +13,6 @@ const tokenSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
-      unique: true,
       index: true,
     },
 

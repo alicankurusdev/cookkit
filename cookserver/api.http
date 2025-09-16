@@ -1,37 +1,147 @@
-# @name auth
-post http://localhost:8000/
+@baseUrl = http://localhost:8000
+
+###
+
+# @name users
+get {{baseUrl}}/users
 Content-Type: application/json
 
-{
-    
-}
+ {
+    "userName":"test6",
+    "email":"test6@example.com",
+    "password":"12341234"
+ }
+
+### 
+
+# @name users/:id
+delete {{baseUrl}}/users/
+Content-Type: application/json
+
+  {
+    "userName":"parola",
+    "password":"54545454"
+  }
+
 
 ### 
 
 # @name tokens
-get http://localhost:8000/tokens/
+get {{baseUrl}}/tokens
+Content-Type: application/json
 
+
+ {
+    "userId":"68c976381dda70627b867b9c",
+    "token":"asdasasa21231342432scas234234dasdas"
+ }
 
 ###
 
-# @name departments
-get http://localhost:8000/departments/68b89fe60053947efed38319/personnels
+# @name tokens/:id
+put {{baseUrl}}/tokens/
 Content-Type: application/json
-Authorization: Token 8b56992b7f6319a67836d4e31f89439c22a107db43f24ff5d15e247bfe9f3554
 
+ {
+
+ }
 
 ###
 
-# @name personnels
-# notActive 26042ad8881cf220aa7e46b1f97a7597ab958ab89687d7731db2629075d832f9
-# admin ba278e2725f7557dac8a61f325f91a45e3cbd911aa73c2c9183f350a7d12d23a
-# lead ab7b64ad59b3eec81048e904a75628be1fb566a7d54eae362c51089938709053
-# normal 80b6a77aadf790d383a0078f08462e43c923b07a2687e516f2f8364ba764c596
-# deveops lead 8b56992b7f6319a67836d4e31f89439c22a107db43f24ff5d15e247bfe9f3554
-put http://localhost:8000/personnels/68b89fe70053947efed38338
-Content-Type: application/json
-Authorization: Token ba278e2725f7557dac8a61f325f91a45e3cbd911aa73c2c9183f350a7d12d23a
+###
 
-{
-    "isLead":true
-}
+# @name stars/
+get {{baseUrl}}/stars/
+Content-Type: application/json
+
+ {
+    "creatorUserId":"68c974bc55a8100774887d3d" ,
+    "value": 5
+ }
+
+###
+
+# @name stars/:id
+delete {{baseUrl}}/stars/68c97b935890dad8ba598ac6
+Content-Type: application/json
+
+ {
+
+ }
+
+###
+
+# @name comments/
+get {{baseUrl}}/comments
+Content-Type: application/json
+
+ {
+    "creatorUserId":"68c974bc55a8100774887d3d",
+    "content":"asvasvavs"
+
+ }
+
+###
+
+# @name comments/:id
+delete {{baseUrl}}/comments/68c97ed96341273303f70829
+Content-Type: application/json
+
+ {
+    "creatorUserId":"68c974bc55a8100774887d3d",
+    "content":"agaaa"
+ }
+
+###
+
+# @name mealCategories/
+get {{baseUrl}}/mealCategories
+Content-Type: application/json
+
+ {
+    "categoryName":"tatlilar"
+
+ }
+
+###
+
+# @name mealCategories/:id
+put {{baseUrl}}/mealCategories/68c986431ddbb6a59d564282
+Content-Type: application/json
+
+ {
+    "categoryName":""
+ }
+
+###
+
+# @name recipes/
+post {{baseUrl}}/recipes
+Content-Type: application/json
+
+ {
+    "recipeName":"patlicanli kabak",
+    "userId":"68c966ba4080886471376b2a",
+    "description":"patlicanli kabak",
+    "ingredients":["patlican","kabak"],
+    "steps":["patlican pisir", "kabak pisir"],
+    "imageUrl":"https://i.lezzet.com.tr/images-xxlarge-recipe/fransiz-mutfaginin-yildizi-ratatouille-9ce044bd-4bea-4c0b-a8ef-da47b55070e6.jpg",
+    "mealCategories":["68c986431ddbb6a59d564282"],
+    "stars":["68c986431ddbb6a59d564282"]
+
+
+ }
+
+###
+
+# @name recipes/:id
+put {{baseUrl}}/recipes/
+Content-Type: application/json
+
+ {
+    "categoryName":""
+ }
+
+###
+
+

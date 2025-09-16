@@ -10,16 +10,20 @@ const {
 const starSchema = new Schema(
   {
     creatorUserId: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    recipeId: {
+      type: Schema.Types.ObjectId,
+      ref: "Recipe",
+      required: true,
     },
 
     value: {
       type: Number,
       required: true,
-    }
-
+    },
   },
   {
     collection: "stars",
@@ -35,4 +39,4 @@ starSchema.set("toJSON", {
   },
 });
 
-module.exports = model('Star', starSchema);
+module.exports = model("Star", starSchema);
