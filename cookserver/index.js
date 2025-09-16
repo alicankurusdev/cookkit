@@ -55,6 +55,7 @@ app.use('/stars', require('./src/routes/stars.js'));
 app.use('/comments', require('./src/routes/comments.js'));
 app.use('/mealCategories', require('./src/routes/mealCategories.js'));
 app.use('/recipes', require('./src/routes/recipes.js'));
+app.use('/auth', require('./src/routes/auth.js'));
 
 /* ------------------------------------------------------- */
 // ErrorHandler:
