@@ -1,16 +1,16 @@
-"use strict"
+"use strict";
 /* -------------------------------------------------------
-    | FULLSTACK TEAM | NODEJS / EXPRESS |
+                express cookkıt auth
 ------------------------------------------------------- */
-const CustomError = require('../helpers/customError');
-const User = require('../models/users');
-const Token = require('../models/tokens');
-const passwordEncrypt = require('../helpers/passwordEncrypt');
-const jwt = require('jsonwebtoken');
+const CustomError = require("../helpers/customError");
+const User = require("../models/users");
+const Token = require("../models/tokens");
+const passwordEncrypt = require("../helpers/passwordEncrypt");
+const jwt = require("jsonwebtoken");
 
 module.exports = {
-    login: async (req, res) => {
-        /*
+  login: async (req, res) => {
+    /*
             #swagger.tags = ["Authentication"]
             #swagger.summary = "Login"
             #swagger.description = 'Login with username (or email) and password for get simpleToken and JWT'
@@ -24,84 +24,100 @@ module.exports = {
             }
         */
 
-        const { username, email, password } = req.body;
+    const { username, email, password } = req.body;
 
-        if (!((username || email) && password)) throw new CustomError('Username/Email and Password are required.', 401);
+    if (!((username || email) && password))
+      throw new CustomError("Username/Email and Password are required.", 401);
 
-        const user = await User.findOne({ $or: [{ username }, { email }], password });
+    const user = await User.findOne({
+      $or: [{ username }, { email }],
+      password,
+    });
 
-        if (!user) throw new CustomError('Incorrect Username/Email or Password.', 401);
+    if (!user)
+      throw new CustomError("Incorrect Username/Email or Password.", 401);
 
-        if (!user.isActive) throw new CustomError('This account is not active.', 401);
+    if (!user.isActive)
+      throw new CustomError("This account is not active.", 401);
 
-        // Simple Token
-        let tokenData = await Token.findOne({ userId: user._id });
+    // JWT
+    const accessData = {
+      _id: user._id,
+      username: user.userName,
+      isActive: user.isActive,
+      isAdmin: user.isAdmin,
+    };
 
-        if (!tokenData) {
-            tokenData = await Token.create({
-                userId: user._id,
-                token: passwordEncrypt(Date.now() + user._id)
-            });
-        }
-        // Simple Token
+    // jwt.sign(payload, accessKey, options)
+    const access = jwt.sign(accessData, process.env.ACCESS_KEY, {
+      expiresIn: "15m",
+    });
 
-        // JWT
-        const accessData = { _id: user._id, username: user.username, isActive: user.isActive, isAdmin: user.isAdmin };
+    const refresh = jwt.sign({ _id: user._id }, process.env.REFRESH_KEY, {
+      expiresIn: "1d",
+    });
+    // JWT
+    res.status(200).send({
+      error: false,
+      bearer: { access, refresh },
+    });
+  },
 
-        // jwt.sign(payload, accessKey, options)
-        const access = jwt.sign(accessData, process.env.ACCESS_KEY, { expiresIn: '15m' });
-
-        const refresh = jwt.sign({ _id: user._id }, process.env.REFRESH_KEY, { expiresIn: '1d' });
-        // JWT
-
-        res.status(200).send({
-            error: false,
-            bearer: { access, refresh },
-            token: tokenData.token,
-            user
-        });
-    },
-
-    logout: async (req, res) => {
-        /*
-           #swagger.tags = ["Tokens"]
-           #swagger.summary = "Create Token"
+  logout: async (req, res) => {
+    /*
+           #swagger.tags = ["Authentication"]
+           #swagger.summary = "Logout"
         */
 
-        const currentUserId = req.user._id;
+    res.status(200).send({
+      error: false,
+      message: "User logout success You can delete token from your session.",
+    });
+  },
 
-        let result = currentUserId ? await Token.deleteOne({ userId: currentUserId }) : null;
+  refresh: async (req, res) => {
+    /*
+            #swagger.tags = ['Authentication']
+            #swagger.summary = 'JWT: Refresh'
+            #swagger.description = 'Refresh accessToken with refreshToken'
+            #swagger.parameters['body'] = {
+                in: 'body',
+                required: true,
+                schema: {
+                    refresh: '...refreshToken...'
+                }
+            }
+        */
 
-        res.status(200).send({
-            error: false,
-            message: result.deletedCount ? 'User logout success and token deleted.' : 'User logout success You can delete token from your session.'
-        });
-    },
+    const { refresh } = req.body;
 
-    refresh: async (req, res) => {
+    if (!refresh) throw new CustomError("Refresh Token not Fount.", 401);
 
-        const { refresh } = req.body;
+    const refreshData = jwt.verify(refresh, process.env.REFRESH_KEY);
 
-        if (!refresh) throw new CustomError('Refresh Token not Fount.', 401);
+    if (!refreshData) throw new CustomError("JWT Refresh Token is wrong.");
 
-        const refreshData = jwt.verify(refresh, process.env.REFRESH_KEY);
+    const user = await User.findById(refreshData._id);
 
-        if (!refreshData) throw new CustomError('JWT Refresh Token is wrong.');
+    if (!user) throw new CustomError("User is not found with given Id.");
 
-        const user = await User.findById(refreshData._id);
+    if (!user.isActive)
+      throw new CustomError("This account is not active.", 401);
 
-        if (!user) throw new CustomError('User is not found with given Id.');
+    const accessData = {
+      _id: user._id,
+      username: user.userName,
+      isActive: user.isActive,
+      isAdmin: user.isAdmin,
+    };
 
-        if (!user.isActive) throw new CustomError('This account is not active.', 401);
+    const access = jwt.sign(accessData, process.env.ACCESS_KEY, {
+      expiresIn: "15m",
+    });
 
-        const accessData = { _id: user._id, username: user.username, isActive: user.isActive, isAdmin: user.isAdmin };
-
-        const access = jwt.sign(accessData, process.env.ACCESS_KEY, { expiresIn: '15m' });
-
-        res.status(200).send({
-            error: false,
-            access
-        })
-
-    }
-}
+    res.status(200).send({
+      error: false,
+      access,
+    });
+  },
+};

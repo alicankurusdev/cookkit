@@ -1,81 +1,68 @@
-"use strict"
+"use strict";
 
-/* -------------------------------------------------------
-    EXPRESS - RECIPE API
-------------------------------------------------------- */
+/* -------------------------- EXPRESS - RECIPE API -------------------------- */
 
-const express = require("express")
-const app=express()
+const express = require("express");
+const app = express();
 
-// Nested Query
+/* ------Nested Query Enables parsing query strings into nested objects and arrays----------- */
 app.set("query parser", "extended");
 
-//dotenv
-require("dotenv").config()
-const PORT = process.env?.PORT || 8000
+/* ------Loads environment variables from .env file into process.env---------- */
+require("dotenv").config();
+const PORT = process.env?.PORT || 8000;
 
-//DB Connect
+/* ------------------------------- DB Connect ------------------------------- */
+const { dbConnection } = require("./src/configs/dbConnection");
+dbConnection();
 
-const {dbConnection}=require("./src/configs/dbConnection");
- dbConnection()
-
-// JSON config:
+/* ------Parses incoming request bodies with JSON payloads and makes them available under req.body---------- */
 app.use(express.json());
 
-
-// Cookie-Session:
-app.use(require('cookie-session')({
+/* ------Enables cookie-based sessions by storing session data on the client within a signed cookie---------- */
+app.use(
+  require("cookie-session")({
     keys: [process.env.SECRET_KEY || "default-secret"], // burası şart
-}));
+  })
+);
+
+/* ------------------------------ QUERYHANDLER ------------------------------ */
+/* ------Custom middleware to parse and handle query parameters globally before reaching the routes---------- */
+app.use(require("./src/middlewares/queryHandler"));
+
+/* ----------------------------- Authentication ----------------------------- */
+/* ------Custom authentication middleware to protect routes by verifying JWT or session before access---------- */
+app.use(require("./src/middlewares/auth"));
 
 
-// Query Handler:
-app.use(require('./src/middlewares/queryHandler'));
 
-// Authentication:
-// app.use(require('./src/middlewares/auth'));
-
-// Routes
-
-// Home Path
-app.all('/', (req, res) => {
-
-    res.status(200).send({
-        error: false,
-        message: 'Welcome to COOKKIT API Service',
-        session: req.session
-    });
+/* -------------------------------- Home Path ------------------------------- */
+app.all("/", (req, res) => {
+  res.status(200).send({
+    error: false,
+    message: "Welcome to COOKKIT API Service",
+    session: req.session,
+  });
 });
 
-//! ROUTES
+/* -------------------------------- ROUTES -------------------------------- */
 
-app.use('/users', require('./src/routes/users'));
-app.use('/tokens', require('./src/routes/tokens.js'));
-app.use('/stars', require('./src/routes/stars.js'));
-app.use('/comments', require('./src/routes/comments.js'));
-app.use('/mealCategories', require('./src/routes/mealCategories.js'));
-app.use('/recipes', require('./src/routes/recipes.js'));
-app.use('/auth', require('./src/routes/auth.js'));
+app.use("/", require("./src/routes"));
 
-/* ------------------------------------------------------- */
-// ErrorHandler:
-app.use(require('./src/middlewares/errorHandler'))
+/* ------------------------------ ErrorHandler ------------------------------ */
+app.use(require("./src/middlewares/errorHandler"));
 
-// RUN SERVER:a
-app.listen( PORT, () => console.log('API IS RUNNING ON:' + PORT))
+/* ------------------------------- RUN SERVER ------------------------------- */
+app.listen(PORT, () => console.log("API IS RUNNING ON:" + PORT));
 
-/* ------------------------------------------------------- */
-// require('./src/helpers/sync')()
+/* -----------------SEED DATA---------------------- */
 
+// require('./src/helpers/sync')()  //?only once
 
 // API TODOS
 /* -------------------------------------------------------------------------- */
 
-//? -------------------------------- ERD -------------------------------- */
-//? -------------------------------- dosya yapisi -------------------------------- */
-//? -------------------------------- models -------------------------------- */
-//? -------------------------------- controller -------------------------------- */
-//? -------------------------------- route -------------------------------- */
+
 //? -------------------------------- MIDDLEWARE -------------------------------- */
 //? -------------------------------- helpers -------------------------------- */
 //? -------------------------------- swagger -------------------------------- */

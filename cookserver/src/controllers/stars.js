@@ -38,7 +38,6 @@ module.exports = {
             #swagger.summary = 'Create Stars'
         */
 
-    //? Password Validation
 
     const result = await Star.create(req.body);
     if (!result) throw new CustomError("Unable to create record", 404);

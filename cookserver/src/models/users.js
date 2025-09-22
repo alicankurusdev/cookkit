@@ -9,12 +9,6 @@ const {
 
 const passwordEncrypt = require("../helpers/passwordEncrypt");
 
-const userRoles = {
-  Spectator: "Spectator",
-  Member: "Member",
-  Admin: "Admin",
-};
-
 const userSchema = new Schema(
   {
     userName: {
@@ -43,11 +37,13 @@ const userSchema = new Schema(
       set: passwordEncrypt,
     },
 
-    role: {
-      type: String,
-      trim: true,
-      enum: Object.values(userRoles),
-      default: "Spectator",
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
+    isMember: {
+      type: Boolean,
+      default: false,
     },
 
     isActive: {

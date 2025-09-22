@@ -1,6 +1,41 @@
 @baseUrl = http://localhost:8000
-
+@accessToken = Bearer {{login.response.body.bearer.access}}
+@refreshToken = {{login.response.body.bearer.refresh}}
 ###
+
+# @name login
+post {{baseUrl}}/auth/login
+Content-Type: application/json
+
+ {
+    "userName":"test3",
+    "email":"test3@example.com",
+    "password":"12341234"
+ }
+
+### 
+
+# @name logout
+post {{baseUrl}}/auth/logout
+Content-Type: application/json
+
+ {
+    "ref":"test3",
+    "email":"test3@example.com",
+    "password":"12341234"
+ }
+
+### 
+# @name refresh
+post {{baseUrl}}/auth/refresh
+Content-Type: application/json
+
+ {
+    "refresh":"{{refreshToken}}"
+  
+ }
+
+### 
 
 # @name users
 get {{baseUrl}}/users
