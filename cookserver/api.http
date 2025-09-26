@@ -8,9 +8,9 @@ post {{baseUrl}}/auth/login
 Content-Type: application/json
 
  {
-    "userName":"test3",
-    "email":"test3@example.com",
-    "password":"12341234"
+    "userName":"alican2",
+    "email":"alican2@example.com",
+    "password":"Aa*41234"
  }
 
 ### 
@@ -20,8 +20,8 @@ post {{baseUrl}}/auth/register
 Content-Type: application/json
 
  {
-    "userName":"alican2",
-    "email":"alican2@example.com",
+    "userName":"tosunpasa1",
+    "email":"tosunpasa1@gmail.com",
     "password":"Aa*41234"
  }
 
@@ -54,8 +54,8 @@ get {{baseUrl}}/users
 Content-Type: application/json
 
  {
-    "userName":"test6",
-    "email":"test6@example.com",
+    "userName":"admin",
+    "email":"admin@example.com",
     "password":"12341234"
  }
 

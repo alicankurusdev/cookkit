@@ -23,13 +23,13 @@ module.exports = {
             }
         */
 
-    const { username, email, password } = req.body;
+    const { userName, email, password } = req.body;
 
-    if (!((username || email) && password))
+    if (!((userName || email) && password))
       throw new CustomError("Username/Email and Password are required.", 401);
 
     const user = await User.findOne({
-      $or: [{ username }, { email }],
+      $or: [{ userName }, { email }],
       password,
     });
 
@@ -42,7 +42,7 @@ module.exports = {
     // JWT
     const accessData = {
       _id: user._id,
-      username: user.userName,
+      userName: user.userName,
       isActive: user.isActive,
       isAdmin: user.isAdmin,
     };
@@ -79,23 +79,23 @@ module.exports = {
             }
           }
         */
-
+    console.log("afafaa");
     passwordValidation(req?.body?.password);
     const newUser = await User.create(req.body);
 
     if (newUser) {
       const { email, userName } = req.body;
-
-      sendMail(email, "Hoş Geldin 🎉", "welcome", {
+      sendMail("alidrl26@gmail.com", "Hoş Geldiniz hocam 🎉", "welcome", {
         email,
         userName,
       });
-      console.log("email  is gone")
+          console.log("email  is  gone");
+ 
     }
     res.status(201).send({
       error: false,
       message: "User account has been created.",
-      data,
+      newUser,
     });
   },
 
