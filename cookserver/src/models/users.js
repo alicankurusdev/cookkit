@@ -43,7 +43,7 @@ const userSchema = new Schema(
     },
     isMember: {
       type: Boolean,
-      default: false,
+      default: true,
     },
 
     isActive: {

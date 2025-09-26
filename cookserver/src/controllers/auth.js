@@ -4,10 +4,9 @@
 ------------------------------------------------------- */
 const CustomError = require("../helpers/customError");
 const User = require("../models/users");
-const Token = require("../models/tokens");
-const passwordEncrypt = require("../helpers/passwordEncrypt");
 const jwt = require("jsonwebtoken");
-
+const passwordValidation = require("./passwordValidation");
+const sendMail = require("../helpers/sendMail");
 module.exports = {
   login: async (req, res) => {
     /*
@@ -60,6 +59,43 @@ module.exports = {
     res.status(200).send({
       error: false,
       bearer: { access, refresh },
+    });
+  },
+
+  register: async (req, res) => {
+    /*
+          #swagger.tags = ["Authentication"]
+          #swagger.summary = "Register User"
+          #swagger.parameters['body'] = {
+          in: 'body',
+          required: true,
+          schema: {
+              "username": "test",
+              "password": "1234",
+              "email": "test@site.com",
+              "isActive": true,
+              "isMember": false,
+              "isAdmin": false,
+            }
+          }
+        */
+
+    passwordValidation(req?.body?.password);
+    const newUser = await User.create(req.body);
+
+    if (newUser) {
+      const { email, userName } = req.body;
+
+      sendMail(email, "Hoş Geldin 🎉", "welcome", {
+        email,
+        userName,
+      });
+      console.log("email  is gone")
+    }
+    res.status(201).send({
+      error: false,
+      message: "User account has been created.",
+      data,
     });
   },
 

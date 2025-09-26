@@ -15,6 +15,18 @@ Content-Type: application/json
 
 ### 
 
+# @name register
+post {{baseUrl}}/auth/register
+Content-Type: application/json
+
+ {
+    "userName":"alican2",
+    "email":"alican2@example.com",
+    "password":"Aa*41234"
+ }
+
+### 
+
 # @name logout
 post {{baseUrl}}/auth/logout
 Content-Type: application/json

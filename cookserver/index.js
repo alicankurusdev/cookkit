@@ -49,6 +49,15 @@ app.all("/", (req, res) => {
 
 app.use("/", require("./src/routes"));
 
+/* ------------------------------ invalid route ----------------------------- */
+
+app.all("/*splat", async (req, res) => {
+  res.status(404).send({
+    error: true,
+    message: "Route is not available",
+  });
+});
+
 /* ------------------------------ ErrorHandler ------------------------------ */
 app.use(require("./src/middlewares/errorHandler"));
 
@@ -64,6 +73,12 @@ app.listen(PORT, () => console.log("API IS RUNNING ON:" + PORT));
 
 
 //? -------------------------------- MIDDLEWARE -------------------------------- */
+//?auth
+//?errorhandler
+//?errorhandler
+//? permissions
+//? queryhandler
+
 //? -------------------------------- helpers -------------------------------- */
 //? -------------------------------- swagger -------------------------------- */
 //? -------------------------------- develop controllers -------------------------------- */
