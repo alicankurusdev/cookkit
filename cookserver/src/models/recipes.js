@@ -33,8 +33,15 @@ const recipeSchema = new Schema(
       type: [String],
       required: true,
     },
+    isPublish:{
+      type:Boolean,
+      default: true,  //!default false yap
+    },
     imageUrl:{              //!list olacak burasi multer sonrasi update cak
         type:String
+    },
+    countOfVisitors:{              
+        type:Number
     },
     comments: [{
       type: Schema.Types.ObjectId,
@@ -55,12 +62,5 @@ const recipeSchema = new Schema(
   }
 );
 
-recipeSchema.set("toJSON", {
-  transform: (doc, ret) => {
-    ret.id = ret._id;
-    delete ret._id;
-    delete ret.__v;
-  },
-});
 
 module.exports = model("Recipe", recipeSchema);
